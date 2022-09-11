@@ -10,7 +10,7 @@ class Bar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        FittedBox(child: Text('\₹${spendingAmount.toStringAsFixed(0)}')),
+        Container(height:20,child: FittedBox(child: Text('\₹${spendingAmount.toStringAsFixed(0)}'))),
         SizedBox(
           height: 4,
         ),
@@ -22,15 +22,15 @@ class Bar extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.deepOrange, width: 1),
-                    color: Colors.deepOrange),
+                    border: Border.all(color: Theme.of(context).colorScheme.secondary, width: 1),
+                    color: Color.fromRGBO(230, 243, 237, 1)),
               ),
               FractionallySizedBox(
                 heightFactor: spending_percentage_total,
                 child: Container(
                   height: 50,
                   decoration: BoxDecoration(
-                      color: Colors.deepPurple,
+                      color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(10)),
                 ),
               )

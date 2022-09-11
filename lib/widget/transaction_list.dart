@@ -4,54 +4,76 @@ import 'package:date_time_format/date_time_format.dart';
 
 class Transactionlist extends StatelessWidget {
   final List<Transaction> transaction;
-
-  Transactionlist(this.transaction);
+  final Function deletetx;
+  Transactionlist(this.transaction,this.deletetx);
 
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
-        child: transaction.isEmpty?Column(children: [
-          SizedBox(height: 10,),
-          Container(height:300,child: Image.network('https://i.pinimg.com/originals/49/e5/8d/49e58d5922019b8ec4642a2e2b9291c2.png',fit: BoxFit.cover,))
-        ],):ListView.builder(
-      itemBuilder: (ctx, index) {
-        return Card(
-            child: Row(
-          children: <Widget>[
-            Container(
-              child: Text(
-                '\₹ ${transaction[index].amount.toStringAsFixed(2)}',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.blue),
-              ),
-              margin: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.deepPurple, width: 3)),
-              padding: EdgeInsets.all(10),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  transaction[index].title,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-                Text(
-                  DateTimeFormat.format(transaction[index].date,
-                      format: 'D ,  j M'),
-                  style: TextStyle(fontSize: 15, color: Colors.black26),
-                )
-              ],
-            )
-          ],
-        ));
-      },
-      itemCount: transaction.length,
-    ));
+        height: 500,
+        child: transaction.isEmpty
+            ? Column(
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        height: 250,
+                        child: Image.network(
+                          'https://thumbs.dreamstime.com/b/transaction-history-rgb-color-icon-e-wallet-application-mobile-banking-app-using-payment-bill-checking-payments-report-isolated-194875666.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Text("Helps you to track your expenses.",style: TextStyle(fontSize: 32,fontFamily: "Quicksand",fontWeight: FontWeight.bold),textAlign:TextAlign.center,),
+                      SizedBox(height: 90,),
+                      Text("Add Transaction",style: TextStyle(fontSize: 20,fontFamily: "Quicksand",fontWeight: FontWeight.bold,color: Colors.blueGrey))
+                    ],
+                  )
+                ],
+              )
+            : ListView.builder(
+                itemBuilder: (ctx, index) {
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    margin: EdgeInsets.all(5),
+                    elevation: 5,
+                    child: ListTile(
+                      title: Text(
+                        transaction[index].title,
+                        style: TextStyle(
+                            fontSize: 19,
+                            fontFamily: 'Quicksand',
+                            fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        DateTimeFormat.format(transaction[index].date,
+                            format: 'j D Y'),
+                        style: TextStyle(fontSize: 16, fontFamily: 'Quicksand'),
+                      ),
+                      leading: Container(
+                        padding: EdgeInsets.only(top: 8),
+                        height: 50,
+                        child: Card(
+                          elevation: 0,
+                          child: Text(
+                            '\-₹${transaction[index].amount}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                                fontFamily: 'Quicksand',
+                                fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.secondary),
+                          ),
+                        ),
+                      ),
+                      trailing: IconButton(onPressed: ()=>deletetx(transaction[index].id), icon: Icon(Icons.delete,color: Colors.red,),),
+                    ),
+                  );
+                },
+                itemCount: transaction.length,
+              ));
   }
 }

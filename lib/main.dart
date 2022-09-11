@@ -12,7 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        scaffoldBackgroundColor: Colors.white,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Color.fromRGBO(81, 222, 154, 1),
+        ),
         fontFamily: 'Quicksand',
       ),
       title: 'Money tracker',
@@ -34,11 +37,11 @@ class _HomepageState extends State<Homepage> {
     }).toList();
   }
 
-  void _addnewtransaction(String title, double amount) {
+  void _addnewtransaction(String title, double amount,DateTime selected_date) {
     final newtx = Transaction(
         title: title,
         id: DateTime.now().toString(),
-        date: DateTime.now(),
+        date: selected_date,
         amount: amount);
     setState(() {
       _userTransactions.add(newtx);
@@ -48,6 +51,11 @@ class _HomepageState extends State<Homepage> {
   void _startaddnewtransaction(BuildContext ctx) {
     showModalBottomSheet(context: ctx, builder: (_) {
       return NewTransaction(_addnewtransaction);
+    });
+  }
+  void _deleteTransaction(String id){
+    setState(() {
+      _userTransactions.removeWhere((tx){return tx.id==id;});
     });
   }
 
@@ -60,19 +68,21 @@ class _HomepageState extends State<Homepage> {
           _startaddnewtransaction(context);
         },),
         appBar: AppBar(
-          title: Text("Money tracker", style: TextStyle(
-              fontFamily: 'Quicksand', fontWeight: FontWeight.bold)),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: Text("Statistics",style: TextStyle(fontSize: 32,fontFamily: 'Quicksand',fontWeight:FontWeight.bold,color:Color.fromRGBO(29, 42, 48, 1)),),
           actions: [
             IconButton(onPressed: () {
               _startaddnewtransaction(context);
-            }, icon: Icon(Icons.add), highlightColor: Colors.cyan,)
+            }, icon: Icon(Icons.add), color: Theme.of(context).colorScheme.secondary,)
           ],
         ),
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Chart(_recentTransaction),
-              Transactionlist(_userTransactions),
+              Transactionlist(_userTransactions,_deleteTransaction),
             ],
           ),
         ));
