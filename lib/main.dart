@@ -74,6 +74,31 @@ class _HomepageState extends State<Homepage> {
       });
     });
   }
+  Widget _buildlandscapecontent(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('show Chart'),
+        Switch(
+          activeColor: Theme.of(context).colorScheme.secondary,
+          value: _showchart,
+          onChanged: (val) {
+            setState(() {
+              _showchart = val;
+            });
+          },
+        ),
+      ],
+    );
+  }
+  Widget _buildportraitcontent(MediaQueryData mediaquery,AppBar appbar){
+    return Container(
+        height: (mediaquery.size.height -
+            appbar.preferredSize.height -
+            mediaquery.padding.top) *
+            0.25,
+        child: Chart(_recentTransaction));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,28 +146,8 @@ class _HomepageState extends State<Homepage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              if (islandscape)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('show Chart'),
-                    Switch(
-                      activeColor: Theme.of(context).colorScheme.secondary,
-                      value: _showchart,
-                      onChanged: (val) {
-                        setState(() {
-                          _showchart = val;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              if(!islandscape) Container(
-                  height: (mediaquery.size.height -
-                      appbar.preferredSize.height -
-                      mediaquery.padding.top) *
-                      0.25,
-                  child: Chart(_recentTransaction)),
+              if (islandscape) _buildlandscapecontent(),
+              if(!islandscape) _buildportraitcontent(mediaquery, appbar),
               if(!islandscape) txlistWidget,
               if(islandscape) _showchart
                   ? Container(
