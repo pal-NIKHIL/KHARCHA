@@ -33,45 +33,47 @@ class _NewTransactionState extends State<NewTransaction> {
     });
   }
   Widget build(BuildContext context) {
-    return Card(
-        shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0)),
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              decoration: InputDecoration(labelText: 'Title'),
-              controller: _input_title,
-              onSubmitted: (_)=>submit_data(),
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              keyboardType: TextInputType.number,
-              controller: _input_amount,
-              onSubmitted: (_)=>submit_data(),
-            ),
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SingleChildScrollView(
+      child: Card(
+          shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0)),
+        child: Container(
+          padding: EdgeInsets.only(top: 10,left: 10,right: 10,bottom: MediaQuery.of(context).viewInsets.bottom+10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(_checkselecteddate==false?"Choose Date":DateTimeFormat.format(_selectedDate, format: 'd/m/Y')),
-              IconButton(onPressed: _presentDatepicker, icon:Icon(Icons.calendar_month_outlined))
-            ],),
-            SizedBox(
-              height: 50,
-            ),
-            ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary),
-                ),
-                onPressed: submit_data,
-                child: Text(
-                  "ADD TRANSACTION",
-                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700,fontFamily: 'Quicksand',fontSize: 15),
+              TextField(
+                decoration: InputDecoration(labelText: 'Title'),
+                controller: _input_title,
+                onSubmitted: (_)=>submit_data(),
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: 'Amount'),
+                keyboardType: TextInputType.number,
+                controller: _input_amount,
+                onSubmitted: (_)=>submit_data(),
+              ),
+              Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(_checkselecteddate==false?"Choose Date":DateTimeFormat.format(_selectedDate, format: 'd/m/Y')),
+                IconButton(onPressed: _presentDatepicker, icon:Icon(Icons.calendar_month_outlined))
+              ],),
+              SizedBox(
+                height: 50,
+              ),
+              ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary),
+                  ),
+                  onPressed: submit_data,
+                  child: Text(
+                    "ADD TRANSACTION",
+                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700,fontFamily: 'Quicksand',fontSize: 15),
 
-                ))
-          ],
+                  ))
+            ],
+          ),
         ),
       ),
     );

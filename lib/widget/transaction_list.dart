@@ -9,31 +9,29 @@ class Transactionlist extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Container(
-        height: 500,
         child: transaction.isEmpty
-            ? Column(
+            ? LayoutBuilder(builder: (ctx,constraint){
+              return Column(
+            children: [
+              SizedBox(
+                height: 10,
+              ),
+              Column(
                 children: [
-                  SizedBox(
-                    height: 10,
+                  Container(
+                    alignment: Alignment.center,
+                    height: constraint.maxHeight*0.6,
+                    child: Image.network(
+                      'https://thumbs.dreamstime.com/b/transaction-history-rgb-color-icon-e-wallet-application-mobile-banking-app-using-payment-bill-checking-payments-report-isolated-194875666.jpg',
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        height: 250,
-                        child: Image.network(
-                          'https://thumbs.dreamstime.com/b/transaction-history-rgb-color-icon-e-wallet-application-mobile-banking-app-using-payment-bill-checking-payments-report-isolated-194875666.jpg',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Text("Helps you to track your expenses.",style: TextStyle(fontSize: 32,fontFamily: "Quicksand",fontWeight: FontWeight.bold),textAlign:TextAlign.center,),
-                      SizedBox(height: 90,),
-                      Text("Add Transaction",style: TextStyle(fontSize: 20,fontFamily: "Quicksand",fontWeight: FontWeight.bold,color: Colors.blueGrey))
-                    ],
-                  )
+                  Text("Helps you to track your expenses.",style: TextStyle(fontSize: 32,fontFamily: "Quicksand",fontWeight: FontWeight.bold),textAlign:TextAlign.center,),
                 ],
               )
-            : ListView.builder(
+            ],
+          );
+        }): ListView.builder(
                 itemBuilder: (ctx, index) {
                   return Card(
                     shape: RoundedRectangleBorder(

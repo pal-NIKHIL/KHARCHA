@@ -8,14 +8,16 @@ class Bar extends StatelessWidget {
   Bar(this.label, this.spendingAmount, this.spending_percentage_total);
 
   Widget build(BuildContext context) {
-    return Column(
+    return LayoutBuilder(builder: (ctx,constraint){
+      return
+      Column(
       children: [
-        Container(height:20,child: FittedBox(child: Text('\₹${spendingAmount.toStringAsFixed(0)}'))),
+        Container(height:constraint.maxHeight*0.15,child: FittedBox(child: Text('\₹${spendingAmount.toStringAsFixed(0)}'))),
         SizedBox(
-          height: 4,
+          height: constraint.maxHeight*0.05,
         ),
         Container(
-          height: 80,
+          height: constraint.maxHeight*0.6,
           width: 15,
           child: Stack(
             children: [
@@ -38,10 +40,11 @@ class Bar extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 4,
+          height:  constraint.maxHeight*0.05,
         ),
-        Text(label)
+        Container(height: constraint.maxHeight*0.15,child: FittedBox(child: Text(label)))
       ],
+    );}
     );
   }
 }

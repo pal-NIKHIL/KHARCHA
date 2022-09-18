@@ -40,7 +40,7 @@ class Chart extends StatelessWidget {
         margin: EdgeInsets.all(10),
         child: Padding(
           padding: EdgeInsets.all(10),
-          child: Row(
+          child: Row( 
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: grouptransaction.map((data) {
                 return Flexible(
